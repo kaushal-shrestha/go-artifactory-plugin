@@ -56,6 +56,7 @@ public class GoArtifact {
         return properties;
     }
 
+
     public String sha1() {
         if (checksums.isEmpty())
             this.checksums = computeChecksums();

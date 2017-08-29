@@ -6,7 +6,7 @@
         <target-go-version>${go.version}</target-go-version>
         <description>Plugin to integrate Go with Artifactory</description>
         <vendor>
-            <name>Tushar Madhukar</name>
+            <name>Douglas Quintanilha</name>
             <url>${url}</url>
         </vendor>
         <target-os>

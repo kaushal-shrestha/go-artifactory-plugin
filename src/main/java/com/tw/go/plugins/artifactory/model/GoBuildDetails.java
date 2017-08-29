@@ -13,7 +13,7 @@ public class GoBuildDetails {
     private String url;
     private DateTime startedAt;
     private Collection<GoArtifact> goArtifacts = new ArrayList<>();
-    private Map<String, String> envVars = new HashMap<>();
+    private Map<?, ?> envVars = new HashMap<>();
 
     public GoBuildDetails(String name, String number, DateTime startedAt) {
         this.name = name;
@@ -49,11 +49,11 @@ public class GoBuildDetails {
         this.url = url;
     }
 
-    public void environmentVariables(Map<String, String> envVars) {
+    public void environmentVariables(Map<?, ?> envVars) {
         this.envVars = envVars;
     }
 
-    public Map<String, String> environmentVariables() {
+    public Map<?, ?> environmentVariables() {
         return copyOf(this.envVars);
     }
 }

@@ -4,31 +4,23 @@
     </style>
 
     <label>Artifactory URI:<span class="asterisk">*</span></label>
-    <input type="text" ng-model="URI" />
+    <input type="text" ng-model="ArtifactoryUri" />
     <div class="contextual_help has_go_tip_right" title="e.g. repo-key/path/to/artifact.ext or repo-key/dir. Env variables ${GO_REVISION}"></div>
-    <span class="form_error" ng-show="GOINPUTNAME[URI].$error.server">{{ GOINPUTNAME[URI].$error.server }}</span>
+    <span class="form_error" ng-show="GOINPUTNAME[ArtifactoryUri].$error.server">{{ GOINPUTNAME[ArtifactoryUri].$error.server }}</span>
 
     <div class="newline">
         <!-- hack to make checkboxes work in Go Angular templates -->
-        <input type="checkbox" ng-model="uriIsFolderTmp"
-               ng-init="uriIsFolderTmp = uriIsFolder" ng-change="uriIsFolder = uriIsFolderTmp" ng-true-value="true"
+        <input type="checkbox" ng-model="UriIsFolder"
+               ng-init="UriIsFolder = UriIsFolder" ng-change="UriIsFolder = UriIsFolder" ng-true-value="true"
                ng-false-value="false"/>
-        <input type="hidden" ng-model="uriIsFolder" value="{{ uriIsFolder }}">
+        <input type="hidden" ng-model="UriIsFolder" value="{{ UriIsFolder }}">
         <label class="inline">URI denotes a folder</label>
     </div>
 </div>
 <div class="form_item_block">
     <label>Artifact Path:<span class="asterisk">*</span></label>
-    <input type="text" ng-model="Path"/>
+    <input type="text" ng-model="ArtifactoryPath"/>
     <div class="contextual_help has_go_tip_right"
          title="Path can contain globs (refer Javadoc for java.nio.file.FileSystem#getPathMatcher). It should not start with a '/'"></div>
-    <span class="form_error" ng-show="GOINPUTNAME[Path].$error.server">{{ GOINPUTNAME[Path].$error.server }}</span>
-</div>
-<div class="form_item_block">
-    <label>Build properties:</label>
-    <textarea class="form_input code_text" cols="50" rows="5" wrap="off" ng-model="Properties"></textarea>
-
-    <div class="inline_instruction">A key=value pair on each line</div>
-    <span class="form_error"
-          ng-show="GOINPUTNAME[Properties].$error.server">{{ GOINPUTNAME[Properties].$error.server }}</span>
+    <span class="form_error" ng-show="GOINPUTNAME[ArtifactoryPath].$error.server">{{ GOINPUTNAME[ArtifactoryPath].$error.server }}</span>
 </div>
