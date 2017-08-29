@@ -19,8 +19,9 @@ public class ValidateRequest {
         HashMap<String, String> errorMap = new HashMap<String, String>();
        
         //TODO Better validation below:
-        if (!configMap.containsKey(PublishTask.ARTIFACTORY_URI_PROPERTY) || ((Map<?, ?>) configMap.get(PublishTask.ARTIFACTORY_URI_PROPERTY)).get("value") == null || 
-        		((String) ((Map<?, ?>) configMap.get(PublishTask.ARTIFACTORY_URI_PROPERTY)).get("value")).trim().isEmpty()) {
+        if (!configMap.containsKey(PublishTask.ARTIFACTORY_URI_PROPERTY) 
+        	|| ((Map<?, ?>) configMap.get(PublishTask.ARTIFACTORY_URI_PROPERTY)).get("value") == null 
+        	|| ((String) ((Map<?, ?>) configMap.get(PublishTask.ARTIFACTORY_URI_PROPERTY)).get("value")).trim().isEmpty()) {
             errorMap.put(PublishTask.ARTIFACTORY_URI_PROPERTY, "Artifactory URI cannot be empty");
         }
         

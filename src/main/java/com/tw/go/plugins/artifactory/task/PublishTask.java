@@ -34,7 +34,8 @@ public class PublishTask implements GoPlugin {
 
 	@Override
 	public GoPluginApiResponse handle(GoPluginApiRequest requestMessage) throws UnhandledRequestTypeException {
-        if ("configuration".equals(requestMessage.requestName())) {
+     
+		if ("configuration".equals(requestMessage.requestName())) {
             return new GetConfigRequest().execute();
         } else if ("validate".equals(requestMessage.requestName())) {
             return new ValidateRequest().execute(requestMessage);
