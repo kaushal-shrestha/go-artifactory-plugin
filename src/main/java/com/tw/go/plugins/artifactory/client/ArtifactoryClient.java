@@ -1,26 +1,29 @@
 package com.tw.go.plugins.artifactory.client;
 
-import com.google.common.base.Function;
-import com.tw.go.plugins.artifactory.Logger;
-import com.tw.go.plugins.artifactory.model.GoArtifact;
-import com.tw.go.plugins.artifactory.model.GoBuildDetails;
-import com.tw.go.plugins.artifactory.model.UploadMetadata;
+import static com.google.common.collect.Lists.newArrayList;
+import static java.lang.String.format;
+
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+
 import org.jfrog.build.api.Build;
 import org.jfrog.build.client.ArtifactoryBuildInfoClient;
 import org.jfrog.build.client.ArtifactoryUploadResponse;
 import org.jfrog.build.client.DeployDetails;
 
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
+import com.google.common.base.Function;
+import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
+import com.tw.go.plugins.artifactory.Logger;
+import com.tw.go.plugins.artifactory.model.GoArtifact;
 
-import static com.google.common.collect.Iterables.transform;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.toMap;
-import static java.lang.String.format;
+import com.tw.go.plugins.artifactory.model.GoBuildDetails;
+import com.tw.go.plugins.artifactory.model.UploadMetadata;
 import static org.apache.commons.lang.StringUtils.chomp;
+import static com.google.common.collect.Maps.toMap;
 
 public class ArtifactoryClient implements Closeable {
     private Logger logger = Logger.getLogger(getClass());
@@ -40,12 +43,13 @@ public class ArtifactoryClient implements Closeable {
     }
 
     public UploadMetadata uploadArtifacts(Collection<GoArtifact> artifacts) {
-        Iterable<ArtifactoryUploadResponse> responses = transform(artifacts, new Function<GoArtifact, ArtifactoryUploadResponse>() {
-            @Override
-            public ArtifactoryUploadResponse apply(GoArtifact artifact) {
-                return upload(artifact);
-            }
-        });
+        ArrayList<ArtifactoryUploadResponse> responses = new ArrayList<ArtifactoryUploadResponse>();
+
+        for ( GoArtifact artifact : artifacts) {
+        	ArtifactoryUploadResponse response = upload(artifact);
+        	responses.add(response);
+        }
+        
         return new UploadMetadata(newArrayList(responses));
     }
 
@@ -65,9 +69,11 @@ public class ArtifactoryClient implements Closeable {
         buildInfoClient.shutdown();
     }
 
-    private ArtifactoryUploadResponse upload(GoArtifact artifact) {
-        File artifactFile = new File(artifact.localPath());
+    private ArtifactoryUploadResponse upload(GoArtifact artifact){
 
+    	
+    	File artifactFile = new File(artifact.localPath());
+    	
         try {
             DeployDetails deployDetails = new DeployDetails.Builder()
                     .targetRepository(artifact.repository())
@@ -77,7 +83,6 @@ public class ArtifactoryClient implements Closeable {
                     .md5(artifact.md5())
                     .addProperties(removeTrailingSlashes(artifact.properties()))
                     .build();
-
             return buildInfoClient.deployArtifact(deployDetails);
         } catch (IOException e) {
             String error = format("Unable to upload artifact %s : %s", artifact, e.getMessage());
@@ -85,6 +90,7 @@ public class ArtifactoryClient implements Closeable {
             throw new RuntimeException(error, e);
         }
     }
+    
 
     private Map<String, String> removeTrailingSlashes(final Map<String, String> properties) {
         return toMap(properties.keySet(), new Function<String, String>() {
@@ -94,4 +100,5 @@ public class ArtifactoryClient implements Closeable {
             }
         });
     }
+
 }

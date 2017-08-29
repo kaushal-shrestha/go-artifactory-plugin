@@ -5,3 +5,7 @@ build/
 target/
 com.tw.go.plugins.go-artifactory-plugin/
 .ignore-*-settings
+/bin/
+.settings/*
+.classpath
+.project

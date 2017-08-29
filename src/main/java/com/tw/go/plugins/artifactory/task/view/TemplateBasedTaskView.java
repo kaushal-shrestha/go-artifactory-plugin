@@ -2,7 +2,7 @@ package com.tw.go.plugins.artifactory.task.view;
 
 import com.thoughtworks.go.plugin.api.task.TaskView;
 import com.tw.go.plugins.artifactory.Logger;
-import com.tw.go.plugins.artifactory.utils.filesystem.ClasspathResource;
+import com.tw.go.plugins.artifactory.utils.ClasspathResource;
 
 import java.io.IOException;
 

@@ -1,22 +1,24 @@
 package com.tw.go.plugins.artifactory.task.executor;
 
-import com.thoughtworks.go.plugin.api.response.execution.ExecutionResult;
-import com.thoughtworks.go.plugin.api.task.*;
-import com.tw.go.plugins.artifactory.client.ArtifactoryClient;
-import com.tw.go.plugins.artifactory.Logger;
-import com.tw.go.plugins.artifactory.model.*;
-import com.tw.go.plugins.artifactory.task.publish.BuildArtifactPublisher;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Collection;
-
-import static com.thoughtworks.go.plugin.api.response.execution.ExecutionResult.failure;
-import static com.thoughtworks.go.plugin.api.response.execution.ExecutionResult.success;
-import static com.tw.go.plugins.artifactory.task.EnvironmentData.*;
 import static java.lang.String.format;
 
-public class PublishTaskExecutor implements TaskExecutor {
+import java.util.Collection;
+import java.util.Map;
+
+import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
+import com.tw.go.plugins.artifactory.Logger;
+import com.tw.go.plugins.artifactory.client.ArtifactoryClient;
+import com.tw.go.plugins.artifactory.model.GoArtifact;
+import com.tw.go.plugins.artifactory.model.GoArtifactFactory;
+import com.tw.go.plugins.artifactory.model.GoBuildDetails;
+import com.tw.go.plugins.artifactory.model.GoBuildDetailsFactory;
+import com.tw.go.plugins.artifactory.model.Result;
+import com.tw.go.plugins.artifactory.model.UploadMetadata;
+import com.tw.go.plugins.artifactory.task.config.Context;
+import com.tw.go.plugins.artifactory.task.config.TaskConfig;
+import com.tw.go.plugins.artifactory.task.publish.BuildArtifactPublisher;
+
+public class PublishTaskExecutor{
     private Logger logger = Logger.getLogger(getClass());
     private GoBuildDetailsFactory buildDetailsFactory;
     private BuildArtifactPublisher buildArtifactPublisher;
@@ -28,34 +30,33 @@ public class PublishTaskExecutor implements TaskExecutor {
         this.buildArtifactPublisher = buildArtifactPublisher;
     }
 
-    @Override
-    public ExecutionResult execute(TaskConfig config, TaskExecutionContext context) {
+    
+    public Result execute(TaskConfig config, Context context) {
         Collection<GoArtifact> artifacts = artifactFactory.createArtifacts(config, context);
-
-        EnvironmentVariables environment = context.environment();
-        GoBuildDetails details = buildDetailsFactory.createBuildDetails(environment, artifacts);
-
-        try (ArtifactoryClient client = createClient(environment)) {
+        Map<?,?> environmentVariables = context.getEnvironmentVariables();
+        GoBuildDetails details = buildDetailsFactory.createBuildDetails(environmentVariables, artifacts);
+        
+        try (ArtifactoryClient client = createClient(environmentVariables)) {
             UploadMetadata uploadMetadata = client.uploadArtifacts(artifacts);
             client.uploadBuildDetails(details);
-
             buildArtifactPublisher.publish(context, uploadMetadata);
-
-            context.console()
-                    .printLine(format("Successfully published artifacts:\n%s", asString(artifacts)));
-            return success("");
+            
+            String message = format("Successfully published artifacts:\n%s", asString(artifacts));
+            
+            return new Result(true, message);
         }
         catch (RuntimeException e) {
             String message = format("Failed to publish one or more artifact [%s]", artifacts);
             logger.error(message, e);
-            return failure(format("%s: %s", message, e.getMessage()));
+            Result result = new Result(false, message);
+            return result;
         }
     }
 
-    private ArtifactoryClient createClient(EnvironmentVariables environment) {
-        String url = ARTIFACTORY_URL.from(environment);
-        String user = ARTIFACTORY_USER.from(environment);
-        String password = ARTIFACTORY_PASSWORD.from(environment);
+    private ArtifactoryClient createClient(Map<?,?>  environmentVariables) {
+        String url = (String) environmentVariables.get("ARTIFACTORY_URL");
+        String user =(String) environmentVariables.get("ARTIFACTORY_USER");
+        String password = (String) environmentVariables.get("ARTIFACTORY_PASSWORD");
 
         return new ArtifactoryClient(url, user, password);
     }
