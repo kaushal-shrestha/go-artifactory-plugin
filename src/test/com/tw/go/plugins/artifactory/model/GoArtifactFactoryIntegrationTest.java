@@ -1,6 +1,7 @@
 package com.tw.go.plugins.artifactory.model;
 
 import static com.tw.go.plugins.artifactory.testutils.FilesystemUtils.path;
+import static com.tw.go.plugins.artifactory.testutils.MapBuilder.map;
 import static org.apache.commons.lang.StringUtils.join;
 import static org.truth0.Truth.ASSERT;
 
@@ -20,91 +21,75 @@ import com.tw.go.plugins.artifactory.task.config.TaskConfigBuilder;
 public class GoArtifactFactoryIntegrationTest {
     private static GoArtifactFactory factory;
 
-    private Map<String, String> properties = ImmutableMap.<String, String>builder().put("name", "value").build();
     
-    		private static Context context;
+    private static Context context = new Context(map("GO_REVISION", "123") ,System.getProperty("user.dir") );
     
     @BeforeClass
     public static void beforeAll() throws Exception {
-        Map<String, String> envVars = new HashMap<>();
-        envVars.put("GO_REVISION", "123");
-        envVars.put("workingDirectory", "123");
-        context = new Context(envVars);
+   
         factory = new GoArtifactFactory();
     }
     
     @Test 
     public void shouldCreateGoArtifacts() {
     	
-    	Map<String, String> enviromentVariable = new HashMap<String, String>();
-    	enviromentVariable.put("ArtifactoryUri", "repo/path/to/output.ext");
-    	enviromentVariable.put("UriIsFolder", "false");
-    	enviromentVariable.put("ArtifactoryPath", path("src", "test", "resources", "artifact.txt"));    	
-        TaskConfig config = new TaskConfig(enviromentVariable);
+        TaskConfig config = new TaskConfig("repo/path/to/output.ext",false, path("src", "test", "resources", "artifact.txt"));
 
         Collection<GoArtifact> artifacts = factory.createArtifacts(config, context);
 
-        GoArtifact expectedArtifact = goArtifact("src/test/resources/artifact.txt", "repo/path/to/output.ext", properties);
-
+        GoArtifact expectedArtifact = goArtifact("src/test/resources/artifact.txt", "repo/path/to/output.ext");
+        
         ASSERT.that(artifacts).has().exactly(expectedArtifact);
     }
 
 
     @Test
     public void shouldCreateArtifactsWithUniqueRemotePathsIfUriIsAFolder() {
-    	Map<String, String> enviromentVariable = new HashMap<>();
-    	enviromentVariable.put("ArtifactoryUri", "repo/path");
-    	enviromentVariable.put("UriIsFolder", "true");
-    	enviromentVariable.put("ArtifactoryPath", asPath("src", "test", "resources", "**{artifact.txt,test.html}"));
-    	TaskConfig config = new TaskConfig(enviromentVariable);
-    
 
+    	TaskConfig config = new TaskConfig("repo/path", true, asPath("src", "test", "resources", "**{artifact.txt,test.html}"));
+   
         Collection<GoArtifact> artifacts = factory.createArtifacts(config, context);
 
-        GoArtifact artifactTxt = goArtifact("src/test/resources/artifact.txt", "repo/path/artifact.txt", properties);
-        GoArtifact testHtml = goArtifact("src/test/resources/view/test.html", "repo/path/test.html", properties);
+        GoArtifact artifactTxt = goArtifact("src/test/resources/artifact.txt", "repo/path/artifact.txt");
+        GoArtifact testHtml = goArtifact("src/test/resources/view/test.html", "repo/path/test.html");
 
         ASSERT.that(artifacts).has().exactly(artifactTxt, testHtml);
     }
 
     @Test
     public void shouldCreateArtifactsWithSameRemotePathIfUriIsNotAFolder() {
-    	Map<String, String> enviromentVariable = new HashMap<>();
-    	enviromentVariable.put("ArtifactoryUri", "repo/path");
-    	enviromentVariable.put("UriIsFolder", "false");
-    	enviromentVariable.put("ArtifactoryPath", asPath("src", "test", "resources", "**{artifact.txt,test.html}"));
-    	TaskConfig config = new TaskConfig(enviromentVariable);
+
+    	TaskConfig config = new TaskConfig("repo/path", false, asPath("src", "test", "resources", "**{artifact.txt,test.html}"));
     	
         Collection<GoArtifact> artifacts = factory.createArtifacts(config, context);
 
-        GoArtifact artifactTxt = goArtifact("src/test/resources/artifact.txt", "repo/path", properties);
-        GoArtifact testHtml = goArtifact("src/test/resources/view/test.html", "repo/path", properties);
+        GoArtifact artifactTxt = goArtifact("src/test/resources/artifact.txt", "repo/path");
+        GoArtifact testHtml = goArtifact("src/test/resources/view/test.html", "repo/path");
 
         ASSERT.that(artifacts).has().exactly(artifactTxt, testHtml);
     }
     
-    //@Test
+    @Test
     public void shouldSubstituteEnvironmentVariablesIntoUri() {
 
-    	Map<String, String> enviromentVariable = new HashMap<>();
-    	enviromentVariable.put("ArtifactoryUri", "repo/path/${GO_REVISION}");
-    	enviromentVariable.put("UriIsFolder", "false");
-    	enviromentVariable.put("ArtifactoryPath", asPath("src", "test", "resources", "**{artifact.txt,test.html}"));
-    	TaskConfig config = new TaskConfig(enviromentVariable);
+            
+        TaskConfig config = new TaskConfig("repo/path/${GO_REVISION}", false, asPath("src", "test", "resources", "**{artifact.txt,test.html}"));
         
+        
+        System.out.println(context.getEnvironmentVariables());
         Collection<GoArtifact> artifacts = factory.createArtifacts(config, context);
 
-        GoArtifact artifactTxt = goArtifact("src/test/resources/artifact.txt", "repo/path/123", properties);
-        GoArtifact testHtml = goArtifact("src/test/resources/view/test.html", "repo/path/123", properties);
+        GoArtifact artifactTxt = goArtifact("src/test/resources/artifact.txt", "repo/path/123");
+        GoArtifact testHtml = goArtifact("src/test/resources/view/test.html", "repo/path/123");
 
+        
         ASSERT.that(artifacts).has().exactly(artifactTxt, testHtml);
     }
 
-    private GoArtifact goArtifact(String relativePath, String uri, Map<String, String> properties) {
+    private GoArtifact goArtifact(String relativePath, String uri) {
         String[] segments = relativePath.split("/");
 
         GoArtifact artifact = new GoArtifact(path(System.getProperty("user.dir"), segments), uri);
-        artifact.properties(properties);
         return artifact;
     }
 
