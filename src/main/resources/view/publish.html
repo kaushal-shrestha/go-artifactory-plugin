@@ -5,7 +5,7 @@
 
     <label>Artifactory URI:<span class="asterisk">*</span></label>
     <input type="text" ng-model="ArtifactoryUri" />
-    <div class="contextual_help has_go_tip_right" title="e.g. repo-key/path/to/artifact.ext or repo-key/dir. Env variables ${GO_REVISION}"></div>
+    <div class="contextual_help has_go_tip_right" title="e.g. repo-key/path/to/artifact.txt or repo-key/dir. Env variables ${GO_REVISION}"></div>
     <span class="form_error" ng-show="GOINPUTNAME[ArtifactoryUri].$error.server">{{ GOINPUTNAME[ArtifactoryUri].$error.server }}</span>
 
     <div class="newline">
@@ -14,13 +14,13 @@
                ng-init="UriIsFolder = UriIsFolder" ng-change="UriIsFolder = UriIsFolder" ng-true-value="true"
                ng-false-value="false"/>
         <input type="hidden" ng-model="UriIsFolder" value="{{ UriIsFolder }}">
-        <label class="inline">URI denotes a folder</label>
+        <label class="inline">URI is a folder</label>
     </div>
 </div>
 <div class="form_item_block">
     <label>Artifact Path:<span class="asterisk">*</span></label>
     <input type="text" ng-model="ArtifactoryPath"/>
     <div class="contextual_help has_go_tip_right"
-         title="Path can contain globs (refer Javadoc for java.nio.file.FileSystem#getPathMatcher). It should not start with a '/'"></div>
+         title="Path can contain globs, ex: folder-to-send/*.txt  (refer Javadoc for java.nio.file.FileSystem#getPathMatcher). It should not start with a '/'"></div>
     <span class="form_error" ng-show="GOINPUTNAME[ArtifactoryPath].$error.server">{{ GOINPUTNAME[ArtifactoryPath].$error.server }}</span>
 </div>

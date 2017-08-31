@@ -4,7 +4,7 @@
         <name>Artifactory Plugin</name>
         <version>${version}</version>
         <target-go-version>${go.version}</target-go-version>
-        <description>Plugin to integrate Go with Artifactory</description>
+        <description>Plugin to integrate GoCD with Artifactory</description>
         <vendor>
             <name>Douglas Quintanilha</name>
             <url>${url}</url>
