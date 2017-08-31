@@ -40,9 +40,13 @@ public class GoArtifactFactory {
 
             private String artifactUri(String artifactName) {
                 String uri = config.getUriIsFolder() ? config.getArtifactoryUri()+ "/" + artifactName : config.getArtifactoryUri();
-                //TODO VER ISSO AQUI QUE N SEI SE O MAP RETORNADO É O MESMO.
+                uri = substituteEnvironmentVariablesIntoUri(uri);
+                return uri; 
+            }
+            
+            private String substituteEnvironmentVariablesIntoUri(String uri) {
                 StrSubstitutor sub = new StrSubstitutor(context.getEnvironmentVariables());
-                return sub.replace(uri);
+            	return sub.replace(uri);
             }
             
         };

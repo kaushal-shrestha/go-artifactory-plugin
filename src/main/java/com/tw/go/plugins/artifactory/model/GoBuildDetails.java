@@ -53,7 +53,15 @@ public class GoBuildDetails {
         this.envVars = envVars;
     }
 
-    public Map<?, ?> environmentVariables() {
+    public Map<?, ?> getEnvironmentVariables() {
         return copyOf(this.envVars);
     }
+
+	@Override
+	public String toString() {
+		return "GoBuildDetails [name=" + name + ", number=" + number + ", url=" + url + ", startedAt=" + startedAt
+				+ ", goArtifacts=" + goArtifacts + ", envVars=" + envVars + "]";
+	}
+    
+    
 }

@@ -54,8 +54,8 @@ public class BuildMap implements Function<GoBuildDetails, Build> {
 
     private Properties environmentProperties(GoBuildDetails buildDetails) {
         Map<String, String> map = new HashMap<>();
-        for (Object envVar : buildDetails.environmentVariables().keySet()) {
-            map.put(BUILD_INFO_ENVIRONMENT_PREFIX + envVar, (String) buildDetails.environmentVariables().get(envVar));
+        for (Object envVar : buildDetails.getEnvironmentVariables().keySet()) {
+            map.put(BUILD_INFO_ENVIRONMENT_PREFIX + envVar, (String) buildDetails.getEnvironmentVariables().get(envVar));
         }
 
         Properties properties = new Properties();

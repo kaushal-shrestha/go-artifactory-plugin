@@ -44,7 +44,7 @@ public class PublishTaskExecutorIntegrationTest {
     @Before
     public void beforeEach() {
         artifactoryStub.reset();
-        artifactoryStub.get("/api/system/version").returns(response(DefaultGoApiResponse.SUCCESS_RESPONSE_CODE).withContent("{ \"version\" : \"3.2.1.1\" }"));
+        artifactoryStub.get("/api/system/version").returns(response(DefaultGoApiResponse.SUCCESS_RESPONSE_CODE).withContent("{ \"version\" : \"5.4.6\" }"));
 
         executor = new PublishTaskExecutor(new GoArtifactFactory(), new GoBuildDetailsFactory(), new BuildArtifactPublisher());
         pluginDirectory = path(System.getProperty("java.io.tmpdir"), "com.tw.go.plugins.go-artifactory-plugin");
