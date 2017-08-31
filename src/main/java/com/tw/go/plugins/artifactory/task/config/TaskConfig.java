@@ -22,8 +22,14 @@ public class TaskConfig {
 		}
 			
 	}
-	
-	  private String getValue(Map<?, ?> config, String property) {
+
+	public TaskConfig(String artifactoryUri, boolean uriIsFolder, String artifactPath) {
+		this.artifactoryUri = artifactoryUri;
+		this.uriIsFolder = uriIsFolder;
+		this.artifactPath = artifactPath;
+	}
+
+	private String getValue(Map<?, ?> config, String property) {
 	        return (String) ((Map<?, ?>) config.get(property)).get("value");
 	  }
 
@@ -38,11 +44,6 @@ public class TaskConfig {
 	public String getArtifactPath() {
 		return artifactPath;
 	}
-	
-	public boolean isFolder() {
-		
-		return uriIsFolder;
-	}
-	
+
 
 }

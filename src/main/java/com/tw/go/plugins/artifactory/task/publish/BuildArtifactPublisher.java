@@ -24,7 +24,7 @@ public class BuildArtifactPublisher {
         try {
             File publishableFile = new File(pluginDir(context), publishable.name());
             stream = new FileOutputStream(publishableFile);
-
+        	
             IOUtils.write(publishable.content(), stream, "UTF-8");
         } catch (IOException e) {
             logger.error(e.getMessage(), e);

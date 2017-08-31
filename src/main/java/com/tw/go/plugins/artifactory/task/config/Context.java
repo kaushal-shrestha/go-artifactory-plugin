@@ -7,8 +7,12 @@ public class Context {
     private final String workingDir;
 
     public Context(Map<?, ?> context) {
-        environmentVariables = (Map<?, ?>) context.get("environmentVariables");
-        workingDir = (String) context.get("workingDirectory");
+        this.environmentVariables = (Map<?, ?>) context.get("environmentVariables");
+        this.workingDir = (String) context.get("workingDirectory");
+    }
+    public Context(Map<?, ?> environmentVariables, String workingDir ) {
+        this.environmentVariables =  environmentVariables;
+        this.workingDir = workingDir;
     }
 
     public Map<?, ?> getEnvironmentVariables() {

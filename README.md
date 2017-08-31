@@ -1,6 +1,6 @@
 ## [Artifactory](http://www.jfrog.com/home/v_artifactorypro_overview) plugin for ThoughtWorks [GoCD](http://www.go.cd/)
 
-This project is a simplified fork from [TusharM](https://github.com/tusharm/go-artifactory-plugin) since he doesn't update the plugin anymore and it wasn't compatible with GoCD most recent versions (>=17.2).
+This project is a simplified fork from [TusharM](https://github.com/tusharm/go-artifactory-plugin) version of the plugin, since he doesn't update the his version anymore and it wasn't compatible with GoCD most recent version (>=17.2).
 
 It does **not** upload Artifacts with build *properties* as the original plugin did.
 
