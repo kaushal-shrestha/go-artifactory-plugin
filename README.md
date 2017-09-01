@@ -19,8 +19,22 @@ The plugin requires these environment variables to be set for the GoCD task
 ### Installation
 
 Download the [plugin jar](FIX THIS FILE) and copy to the _plugins/external_ directory 
-on the GoCD server and restart. Refer to "Installing a plugin" section of [Go Documentation](http://www.thoughtworks.com/products/docs/go/current/help/go_plugins_basics.html) for details.
+on the GoCD server and restart it.
 
+Refer to "Installing a plugin" section of [Go Documentation](http://www.thoughtworks.com/products/docs/go/current/help/go_plugins_basics.html) for additional details.
+
+
+### Building the .jar
+
+If you want you can build the `plugin.jar` yourself by using Maven. Just go to the plugin folder and use:
+
+```
+mvn package
+```
+
+The plugin jar will be build at the `/target/dist/`` folder.
+
+### Plugin logs
 The log file (`plugin-com.tw.go.plugins.go-artifactory-plugin.log`) is created on GoCD agent (e.g. on Linux, inside `/var/lib/go-agent`). 
 
 You can get better log messages by setting plugin log level in Go Agent startup configuration e.g. 
@@ -40,15 +54,15 @@ export GO_AGENT_SYSTEM_PROPERTIES=" -Dplugin.com.tw.go.plugins.go-artifactory-pl
 
 
 #### Global configuration
-![](images/artifactory_config.png?raw=true)
+![The Global Configuration that is needed by the plugin](images/artifactory_config.png?raw=true)
 
 
 #### Artifactory task 
-![](images/artifactory_task.png?raw=true)
+![The plugin as a new Task on the task selection menu ](images/artifactory_task.png?raw=true)
 
 
 #### Task level configuration 
-![](images/task_config.png?raw=true)
+![The Publish to Artifactory configuration task](images/task_config.png?raw=true)
 
 
 

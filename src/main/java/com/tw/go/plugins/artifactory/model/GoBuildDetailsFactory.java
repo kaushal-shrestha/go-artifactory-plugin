@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
-import com.thoughtworks.go.plugin.api.task.Console;
-
 public class GoBuildDetailsFactory {
     private static final String OBFUSCATED = "****";
 
