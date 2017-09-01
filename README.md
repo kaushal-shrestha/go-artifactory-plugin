@@ -32,7 +32,7 @@ If you want you can build the `plugin.jar` yourself by using Maven. Just go to t
 mvn package
 ```
 
-The plugin jar will be build at the `/target/dist/`` folder.
+The plugin jar will be build at the `/target/dist/` folder.
 
 ### Plugin logs
 The log file (`plugin-com.tw.go.plugins.go-artifactory-plugin.log`) is created on GoCD agent (e.g. on Linux, inside `/var/lib/go-agent`). 
