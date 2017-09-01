@@ -7,16 +7,12 @@ import static org.truth0.Truth.ASSERT;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.common.collect.ImmutableMap;
 import com.tw.go.plugins.artifactory.task.config.Context;
 import com.tw.go.plugins.artifactory.task.config.TaskConfig;
-import com.tw.go.plugins.artifactory.task.config.TaskConfigBuilder;
 
 public class GoArtifactFactoryIntegrationTest {
     private static GoArtifactFactory factory;

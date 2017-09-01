@@ -1,11 +1,11 @@
 package com.tw.go.plugins.artifactory.task.config;
 
-import com.thoughtworks.go.plugin.api.task.TaskConfig;
-
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import com.thoughtworks.go.plugin.api.task.TaskConfig;
 
 public class TaskConfigBuilder {
 

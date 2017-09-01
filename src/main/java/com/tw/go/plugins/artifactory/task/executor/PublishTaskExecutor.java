@@ -5,7 +5,6 @@ import static java.lang.String.format;
 import java.util.Collection;
 import java.util.Map;
 
-import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
 import com.tw.go.plugins.artifactory.Logger;
 import com.tw.go.plugins.artifactory.client.ArtifactoryClient;
 import com.tw.go.plugins.artifactory.model.GoArtifact;

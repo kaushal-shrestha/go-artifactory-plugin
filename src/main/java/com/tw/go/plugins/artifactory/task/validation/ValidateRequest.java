@@ -8,7 +8,6 @@ import com.thoughtworks.go.plugin.api.request.GoPluginApiRequest;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 import com.tw.go.plugins.artifactory.task.PublishTask;
-import com.tw.go.plugins.artifactory.task.config.TaskConfig;
 
 public class ValidateRequest {
 	

@@ -1,14 +1,14 @@
 package com.tw.go.plugins.artifactory.task.executor;
 
-import com.thoughtworks.go.plugin.api.task.Console;
-import com.thoughtworks.go.plugin.api.task.EnvironmentVariables;
-import com.thoughtworks.go.plugin.api.task.TaskExecutionContext;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.thoughtworks.go.plugin.api.task.Console;
+import com.thoughtworks.go.plugin.api.task.EnvironmentVariables;
+import com.thoughtworks.go.plugin.api.task.TaskExecutionContext;
 
 public class TaskExecutionContextBuilder {
     private Map<String, String> envVars = new HashMap<>();
