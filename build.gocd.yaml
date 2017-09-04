@@ -6,22 +6,22 @@ pipelines:
         git: git@github.com:stone-payments/go-artifactory-plugin.git
     stages:
       - BuildAndPublish:
-          clean_workspace: true
-          jobs:
-            build:
-              elastic_profile_id: docker.java7-maven            
-              task:
-                - exec:
-                  command: mvn
-                  arguments:
-                    - package                          
-                - plugin:
-                  configuration:
-                    id: com.tw.go.plugins.go-artifactory-plugin
-                    version: 1.0.0 
-                  options:
-                    URI: gocd-plugins/publish-to-artifactory
-                    uriIsFolder: true
-                    Path: target/dist/*.jar
-                    Properties: buildtool=gocd
-                  run_if: passed
+        clean_workspace: true
+        jobs:
+          build:
+            elastic_profile_id: docker.java7-maven            
+            tasks:
+              - exec:
+                command: mvn
+                arguments:
+                  - package                          
+              - plugin:
+                configuration:
+                  id: com.tw.go.plugins.go-artifactory-plugin
+                  version: 1.0.0 
+                options:
+                  URI: gocd-plugins/publish-to-artifactory
+                  uriIsFolder: true
+                  Path: target/dist/*.jar
+                  Properties: buildtool=gocd
+                run_if: passed
