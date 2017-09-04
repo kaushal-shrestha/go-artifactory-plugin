@@ -12,7 +12,7 @@ public class GetViewRequest {
     public GoPluginApiResponse execute() {
         int responseCode = DefaultGoApiResponse.SUCCESS_RESPONSE_CODE;
         HashMap<String, String> view = new HashMap<>();
-        view.put("displayValue", "Publish to Artifactory");
+        view.put("displayValue", "Publish to Artifactory v2.0.0");
         try {
             view.put("template", Util.readResource("/view/publish.html"));
         } catch (Exception e) {
