@@ -34,6 +34,9 @@ mvn package
 
 The plugin jar will be build at the `/target/dist/` folder.
 
+** IMPORTANT ** 
+The plugin MUST BE compiled with the same Java Version that runs the GoCD Server
+
 ### Plugin logs
 The log file (`plugin-com.tw.go.plugins.go-artifactory-plugin.log`) is created on GoCD agent (e.g. on Linux, inside `/var/lib/go-agent`). 
 

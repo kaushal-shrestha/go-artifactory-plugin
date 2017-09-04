@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <go-plugin id="${groupId}.${artifactId}" version="1">
     <about>
-        <name>Artifactory Plugin</name>
+        <name>Artifactory Plugin v2.0.0</name>
         <version>${version}</version>
         <target-go-version>${go.version}</target-go-version>
         <description>Plugin to integrate GoCD with Artifactory</description>

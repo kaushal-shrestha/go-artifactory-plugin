@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.tw.go.plugins</groupId>
-    <artifactId>go-artifactory-plugin</artifactId>
+    <artifactId>go-artifactory-plugin-v2</artifactId>
     <version>2.0.0</version>
     <packaging>jar</packaging>
 
-    <name>go-artifactory-plugin</name>
+    <name>go-artifactory-plugin-v2</name>
     <description>Artifactory Plugin for GoCD</description>
     <url>https://github.com/stone-payments/go-artifactory-plugin</url>
 
@@ -130,8 +130,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
+					<testSource>1.7</testSource>
+	                <testTarget>1.7</testTarget>
                 </configuration>
             </plugin>
             <plugin>
