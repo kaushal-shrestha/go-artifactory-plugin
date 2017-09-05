@@ -16,6 +16,10 @@ pipelines:
                    command: mvn
                    arguments:  
                     - package                          
+               - exec:
+                   command: pwd                        
+               - exec:
+                   command: ls                         
                - plugin:
                    options:
                      URI: gocd-plugins/publish-to-artifactory
