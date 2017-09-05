@@ -134,6 +134,7 @@
                     <target>1.7</target>
 					<testSource>1.7</testSource>
 	                <testTarget>1.7</testTarget>
+	                <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
