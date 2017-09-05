@@ -5,6 +5,8 @@ pipelines:
       git-repo:
         git: git@github.com:stone-payments/go-artifactory-plugin.git
         branch: master
+    environment_variables:
+      ARTIFACTORY_URL: https://artifacts-vip.stone.com.br:443/artifactory/
     stages:
       - BuildAndPublish:
           clean_workspace: true
