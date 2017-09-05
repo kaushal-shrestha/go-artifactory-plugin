@@ -11,17 +11,17 @@ pipelines:
             build:
               elastic_profile_id: docker.java7-maven            
               tasks:
-                - exec:
+                exec:
                   command: mvn
                   arguments:
                     - package                          
-                - plugin:
-                  configuration:
-                    id: com.tw.go.plugins.go-artifactory-plugin
-                    version: 1.0.0 
+                plugin:
                   options:
                     URI: gocd-plugins/publish-to-artifactory
                     uriIsFolder: true
                     Path: target/dist/*.jar
                     Properties: buildtool=gocd
+                  configuration:
+                    id: com.tw.go.plugins.go-artifactory-plugin
+                    version: 1.0.0 
                   run_if: passed
