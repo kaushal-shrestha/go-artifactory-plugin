@@ -18,7 +18,7 @@ pipelines:
                     - package                          
                - plugin:
                    options:
-                     URI: gocd-plugins/publish-to-artifactory
+                     URI: generic-prod/go-cd-plugins/publish-to-artifactory
                      uriIsFolder: true
                      Path: target/dist/*.jar
                      Properties: buildtool=gocd
