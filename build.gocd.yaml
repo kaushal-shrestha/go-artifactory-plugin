@@ -13,13 +13,13 @@ pipelines:
               elastic_profile_id: docker.java7-maven            
               tasks:
                - exec:
-                   command: mvn
-                   arguments:  
-                    - package                          
-               - exec:
                    command: pwd                        
                - exec:
                    command: ls                         
+               - exec:
+                   command: mvn
+                   arguments:  
+                    - package                          
                - plugin:
                    options:
                      URI: gocd-plugins/publish-to-artifactory
