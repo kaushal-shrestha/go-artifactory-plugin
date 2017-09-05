@@ -20,7 +20,7 @@ public class GoArtifactFactory {
     public Collection<GoArtifact> createArtifacts(final TaskConfig config, Context context) {
 
         DirectoryScanner scanner = new DirectoryScanner(context.getWorkingDir());
-        // TODO: ESSE PATH AQUI É O DO ARTIFACTORY, PRECISO FAZER OS CHECKS DE SEGURANÇA NELE
+        // TODO: ESSE PATH AQUI E O DO ARTIFACTORY, PRECISO FAZER OS CHECKS DE SEGURANCA NELE
         Collection<File> files = scanner.scan(config.getArtifactPath());
 
         return transform(files, goArtifact(config.getArtifactoryUri(), config, context));

@@ -11,11 +11,7 @@ pipelines:
           jobs:
             BuildAndPublish:
               elastic_profile_id: docker.java7-maven            
-              tasks:
-               - exec:
-                   command: pwd                        
-               - exec:
-                   command: ls                         
+              tasks:                        
                - exec:
                    command: mvn
                    arguments:  
